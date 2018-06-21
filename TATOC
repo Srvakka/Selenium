@@ -1,0 +1,86 @@
+package learning;
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+public class url 
+{
+    public static void main(String[] args) throws InterruptedException 
+    {
+        System.setProperty("webdriver.chrome.driver","C:\\Users\\abhisheksrivastava\\Downloads\\chromedriver.exe");
+ 	   WebDriver driver = new ChromeDriver();
+     	boolean b= true;
+ 	   String box1;
+ 	  String box2;
+ 	   String baseUrl = "http://10.0.1.86/tatoc";
+         driver.get(baseUrl);
+       driver.findElement(By.linkText("Basic Course")).click();
+        driver.findElement(By.className("greenbox")).click();
+        driver.switchTo().frame("main");
+        box1= driver.findElement(By.id("answer")).getAttribute("class");
+        {
+     	System.out.println(box1);
+        while(b)
+             {
+          driver.switchTo().frame("child");
+          box2= driver.findElement(By.id("answer")).getAttribute("class");
+          System.out.println(box2);
+          if(box1.equals(box2))
+			{
+				b=false;
+			//driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS) ;
+			driver.switchTo().parentFrame();
+			driver.findElement(By.linkText("Proceed")).click();
+			
+			}
+			else
+			{
+				driver.switchTo().parentFrame();
+				driver.findElement(By.linkText("Repaint Box 2")).click();
+			
+             }
+         }
+      }
+        WebElement from = driver.findElement(By.id("dragbox"));
+        WebElement to = driver.findElement(By.id("dropbox"));
+    
+        Actions act=new Actions(driver);					
+
+    			
+             act.dragAndDrop(from, to).build().perform();	
+    driver.findElement(By.linkText("Proceed")).click();
+    driver.findElement(By.linkText("Launch Popup Window")).click();
+    String abc = driver.getWindowHandle();
+   for( String xyz : driver.getWindowHandles())
+   {
+    	driver.switchTo().window(xyz);
+   }
+    
+    driver.findElement(By.id("name")).sendKeys("AAA");
+    driver.findElement(By.id("submit")).click();
+    driver.switchTo().window(abc);
+    driver.findElement(By.linkText("Proceed")).click();
+   
+    
+    
+   driver.findElement(By.linkText("Generate Token")).click();
+    Thread.sleep(100);
+    String To = driver.findElement(By.id("token")).getText();
+    System.out.println(To );
+    
+    String ss = To.substring(7);
+    
+    Cookie a = new Cookie("TOKEN",ss);
+   driver.manage().addCookie(a);
+    driver.findElement(By.linkText("Proceed")).click();
+   
+    
+	//driver.close();
+    
+    
+    }
+    
+    
+    
+}
