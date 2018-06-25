@@ -27,7 +27,7 @@ public class Tatoc
 	  driver.get("http://10.0.1.86/tatoc");
 	  String pagetitle = driver.getTitle();
 	  Assert.assertEquals("Welcome - T.A.T.O.C", pagetitle);
-	  System.out.println("PAge verified");
+	  System.out.println("Page verified");
   }
   @Test(priority = 2)
   public void clickonbasiccourseandclickongreenbox()
